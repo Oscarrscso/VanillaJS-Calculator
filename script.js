@@ -14,39 +14,61 @@ btns.forEach(el =>{
     el.addEventListener("click", e =>{
         let classCheck = e.target.className
         let id = e.target.id
-            if(classCheck == "oper" || classCheck == "AC" || classCheck == "DEL"){
+            if(classCheck != 'nums'){
                switch(id){
-                case 'plus': operator = id
+                case '+': shifter(id)
                     break
-                case 'minus': operator = id
+                case '-': shifter(id)
                     break
-                case 'times': operator = id
+                case '×': shifter(id)
                     break
-                case 'divide': operator = id
+                case '÷': shifter(id)
                     break
                 case 'AC': ac()
                     break
-                case 'DEL': return
-                    default: return
+                case 'DEL': currVal = currVal.slice(0, -1)
+                            currDisp.innerHTML = currVal
+                    break
+                case 'equal': eval()
             } 
             
-        } else {
+    } else {
         if(currVal.length < 10){
-                console.log("aaa");
-            
-            currVal += id
+            if(id == '0' && currVal == '0'){
+                return
+            } else if( id == '.' && currVal.includes('.')){
+                return
+            } else {
+                currVal += id
                 currDisp.innerHTML = currVal
-                } else {
-                    return
-                        } 
+                }        
+            }
         }
     })
 })
 
 const ac = () =>{
-    currVal = '', 
-    prevVal = '', 
-    currDisp.innerHTML = '',
-    prevDisp.innerHTML = '', 
+    currVal = ''
+    prevVal = ''
+    currDisp.innerHTML = ''
+    prevDisp.innerHTML = ''
     operator = ''
+}
+
+const shifter = (oper) =>{
+    operator = oper
+    prevVal = currVal
+    prevDisp.innerHTML = `${prevVal}${oper}`
+    currDisp.innerHTML = ''
+    currVal = ''
+}
+
+const eval = () =>{
+    if(currVal == '' || prevVal == '' || operator == ''){
+        return
+    } else {
+        currVal = parseFloat(currVal)
+        prevVal = parseFloat(prevVal)
+        console.log(typeof currVal);
+    }
 }
