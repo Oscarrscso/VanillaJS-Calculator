@@ -58,11 +58,14 @@ const ac = () =>{
 }
 
 const shifter = (oper) =>{
-    if(currVal != '' || prevVal != ''){
+    if(currVal != '' && prevVal != ''){
         eval()
     } 
-        operator = oper
+
+    if (prevDisp.innerHTML == '' && currDisp.innerHTML != ''){
         prevVal = currVal
+    }
+        operator = oper
         prevDisp.innerHTML = `${prevVal}${oper}`
         currDisp.innerHTML = ''
         currVal = ''
@@ -96,5 +99,6 @@ const evalRender = () =>{
     currVal = currVal.substring(0, 10)
     currDisp.innerHTML = currVal
     prevDisp.innerHTML = ''
+    prevVal = ''
     return
 }
