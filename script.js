@@ -8,6 +8,8 @@ let prevVal = ''
 let prevDisp = document.getElementById("prevD")
 let currDisp = document.getElementById("currD")
 
+let result = ''
+
 //################################################################################################
 
 btns.forEach(el =>{
@@ -56,11 +58,14 @@ const ac = () =>{
 }
 
 const shifter = (oper) =>{
-    operator = oper
-    prevVal = currVal
-    prevDisp.innerHTML = `${prevVal}${oper}`
-    currDisp.innerHTML = ''
-    currVal = ''
+    if(currVal != '' || prevVal != ''){
+        eval()
+    } 
+        operator = oper
+        prevVal = currVal
+        prevDisp.innerHTML = `${prevVal}${oper}`
+        currDisp.innerHTML = ''
+        currVal = ''
 }
 
 const eval = () =>{
@@ -69,6 +74,27 @@ const eval = () =>{
     } else {
         currVal = parseFloat(currVal)
         prevVal = parseFloat(prevVal)
-        console.log(typeof currVal);
+        switch(operator){
+                case '+': result = prevVal + currVal
+                evalRender()
+                    break
+                case '-': result = prevVal - currVal
+                evalRender()
+                    break
+                case '×': result = prevVal * currVal
+                evalRender()
+                    break
+                case '÷': result = prevVal / currVal
+                evalRender()
+                    break
+        }
     }
+}
+
+const evalRender = () =>{
+    currVal = result.toString()
+    currVal = currVal.substring(0, 10)
+    currDisp.innerHTML = currVal
+    prevDisp.innerHTML = ''
+    return
 }
