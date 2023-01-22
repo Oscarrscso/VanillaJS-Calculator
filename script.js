@@ -14,6 +14,10 @@ let result = ''
 
 btns.forEach(el =>{
     el.addEventListener("click", e =>{
+    if(currDisp.innerHTML || prevDisp.innerHTML){
+        currDisp = ''
+        innerHTML = ''
+    }
         let classCheck = e.target.className
         let id = e.target.id
             if(classCheck != 'nums'){
