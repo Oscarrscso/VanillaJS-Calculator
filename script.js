@@ -14,9 +14,8 @@ let result = ''
 
 btns.forEach(el =>{
     el.addEventListener("click", e =>{
-    if(currDisp.innerHTML || prevDisp.innerHTML){
-        currDisp = ''
-        innerHTML = ''
+    if(currDisp.innerHTML == 'NaN'|| prevDisp.innerHTML == 'NaN'){
+        ac()
     }
         let classCheck = e.target.className
         let id = e.target.id
@@ -84,6 +83,9 @@ const shifter = (oper) =>{
 }
 
 const eval = () =>{
+    if(currVal == '' || prevVal == '' || operator == ''){
+        return
+    } 
         currVal = parseFloat(currVal)
         prevVal = parseFloat(prevVal)
         switch(operator){
