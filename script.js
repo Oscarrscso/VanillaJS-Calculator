@@ -58,11 +58,11 @@ const ac = () =>{
 }
 
 const shifter = (oper) =>{
-    if(currVal != '' && prevVal != ''){
+    if(currVal != '' && prevVal != '' && operator != ''){
         eval()
     } 
-
-    if (prevDisp.innerHTML == '' && currDisp.innerHTML != ''){
+    
+    if(prevDisp.innerHTML == '' && currDisp.innerHTML != ''){
         prevVal = currVal
     }
         operator = oper
@@ -72,9 +72,6 @@ const shifter = (oper) =>{
 }
 
 const eval = () =>{
-    if(currVal == '' || prevVal == '' || operator == ''){
-        return
-    } else {
         currVal = parseFloat(currVal)
         prevVal = parseFloat(prevVal)
         switch(operator){
@@ -90,7 +87,6 @@ const eval = () =>{
                 case '÷': result = prevVal / currVal
                 evalRender()
                     break
-        }
     }
 }
 
