@@ -13,7 +13,6 @@ let result = ''
 //################################################################################################
 
 btns.forEach(el =>{
-    
     el.addEventListener("click", e =>{
     if(currDisp.innerHTML == 'NaN'|| prevDisp.innerHTML == 'NaN'){
         ac()
