@@ -39,7 +39,7 @@ btns.forEach(el =>{
             
     } else {
         if(currVal.length < 10){
-            if(id == '0' && currVal == '0'){
+            if(id == '0' && currVal == ''){
                 return
             } else if( id == '.' && currVal.includes('.')){
                 return
