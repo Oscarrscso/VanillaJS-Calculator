@@ -13,6 +13,7 @@ let result = ''
 //################################################################################################
 
 btns.forEach(el =>{
+    
     el.addEventListener("click", e =>{
     if(currDisp.innerHTML == 'NaN'|| prevDisp.innerHTML == 'NaN'){
         ac()
@@ -46,6 +47,7 @@ btns.forEach(el =>{
             } else {
                 currVal += id
                 currDisp.innerHTML = currVal
+                
                 }        
             }
         }
@@ -112,3 +114,24 @@ const evalRender = () =>{
     prevVal = ''
     return
 }
+
+document.addEventListener('keydown', function(event) {
+    if(currVal.length < 10){
+        let key = event.key;
+        if(key == '0' && currVal == '0'){
+            return
+        }
+        if( key == '.' && currVal.includes('.') == false){
+            currVal += key
+                    currDisp.innerHTML = currVal
+            return
+        }
+    key =  parseInt(key)
+            key = key.toString()
+            console.log(key);
+                if(key != 'NaN'){
+                    currVal += key
+                    currDisp.innerHTML = currVal
+                }
+        }
+});
