@@ -58,6 +58,10 @@ const ac = () =>{
 }
 
 const shifter = (oper) =>{
+    const lastDigit = currVal.slice(-1)
+    if(lastDigit == '.'){
+        return
+    }
     if(currVal != '' && prevVal != '' && operator != ''){
         eval()
     } 
