@@ -119,7 +119,6 @@ const evalRender = () =>{
 document.addEventListener('keydown', function(event) {
     if(currVal.length < 10){
         let key = event.key;
-        console.log(key);
         if(key == '0' && currVal == '0'){return}
         if( key == '.' && currVal.includes('.') == false){
             currVal += key
