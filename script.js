@@ -62,12 +62,13 @@ const shifter = (oper) =>{
     if(lastDigit == '.'){
         return
     }
-    if(currVal == '' && prevVal == ''){
-        return
-    }
+    
     if(currVal != '' && prevVal != '' && operator != ''){
         eval()
     } 
+    if(currVal == '' && prevVal == ''){
+        return
+    }
     
     if(prevDisp.innerHTML == '' && currDisp.innerHTML != ''){
         prevVal = currVal
