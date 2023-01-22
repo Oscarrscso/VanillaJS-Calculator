@@ -63,6 +63,8 @@ const ac = () =>{
 }
 
 const shifter = (oper) =>{
+    if(oper == '/'){oper = '÷'}
+    if(oper == '*'){oper = '×'}
     const lastDigit = currVal.slice(-1)
     if(lastDigit == '.'){
         return
@@ -118,17 +120,20 @@ const evalRender = () =>{
 document.addEventListener('keydown', function(event) {
     if(currVal.length < 10){
         let key = event.key;
-        if(key == '0' && currVal == '0'){
-            return
-        }
+        console.log(key);
+        if(key == '0' && currVal == '0'){return}
         if( key == '.' && currVal.includes('.') == false){
             currVal += key
-                    currDisp.innerHTML = currVal
-            return
+                currDisp.innerHTML = currVal
+                    return
         }
+        if (key == 'Enter'){eval()}
+        if (key == 'Backspace'){
+            currVal = currVal.slice(0, -1)
+                currDisp.innerHTML = currVal
+        } if (key == '+' || key == '-' || key == '*' || key == '/'){shifter(key)}
     key =  parseInt(key)
             key = key.toString()
-            console.log(key);
                 if(key != 'NaN'){
                     currVal += key
                     currDisp.innerHTML = currVal
