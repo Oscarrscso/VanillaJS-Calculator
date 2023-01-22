@@ -74,7 +74,7 @@ button:active{
     padding-top: 3px;
 }
 
-.AC, .equal {
+#AC, .equal {
     width: 100%;
     grid-column: span 2;
 } 
