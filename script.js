@@ -120,8 +120,8 @@ const eval = () =>{
 const evalRender = () =>{
 //converts to string to allow, and sets it to the currVal, allowing user to modify result
     currVal = result.toString()
-//if the length of the result is greater than 10, displays an error message (stops overflow)
-    if(currVal.length > 10){
+//if the length of the result is greater than 10, displays an error message, unless it contains a decimal
+    if(currVal.length > 10 && currVal.includes('.') == false){
         currDisp.innerHTML = "error"
             return
     }
