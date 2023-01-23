@@ -82,12 +82,10 @@ const del = () =>{
 
 //shifts current value to previous value, and pushes it to sub display, along with selected operator
 const operatorPressed = (oper) =>{
-//if last digit is equal to '.', pressing an operator button will do nothing.
-    if(currentValue.slice(-1) == '.'){return}
+//ignores if last digit is '.', or if only 0 is displayed
+    if(currentValue.slice(-1) == '.' || mainDisplay.innerHTML == '0'){return}
 //checks if all condtions for evaluation are satisfied
     if(currentValue != '' && previousValue != '' && operator != ''){eval()}
-//ignores if display only contains '0'
-    if(mainDisplay.innerHTML == '0'){return}
 //only pushes the current value, if the sub display is empty
     if(subDisplay.innerHTML == '' && mainDisplay.innerHTML != ''){previousValue = currentValue}
    
@@ -102,7 +100,7 @@ const operatorPressed = (oper) =>{
 //evaluation function
 const eval = () =>{
 //only evaluates if all conditions are met
-    if(currentValue == '' || previousValue == '' || operator == ''){
+    if(currentValue == '' || previousValue == '' || operator == '' || mainDisplay.innerHTML == '.'){
         return
     }
 //convert both values from strings to floats, ready for calculation
