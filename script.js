@@ -1,25 +1,29 @@
+//################################################################################################
+
+//operator variable
 let operator = ''
 
+//all buttons variables
 let btns = document.querySelectorAll("button")
 
+//value Variables
 let currVal = ''
 let prevVal = ''
 
+//display variables
 let prevDisp = document.getElementById("prevD")
 let currDisp = document.getElementById("currD")
 
+//stores result globally
 let result = ''
 
 //################################################################################################
 
+//adds click event listener to each button
 btns.forEach(el =>{
     el.addEventListener("click", e =>{
-    if(currDisp.innerHTML == 'NaN'|| prevDisp.innerHTML == 'NaN'){
-        ac()
-    }
-        let classCheck = e.target.className
-        let id = e.target.id
-            if(classCheck != 'nums'){
+//sets the clicked button's ID to the id variable
+        let id = e.target.id;
                switch(id){
                 case '+': shifter(id)
                     break
@@ -31,30 +35,28 @@ btns.forEach(el =>{
                     break
                 case 'AC': ac()
                     break
-                case 'DEL': if(currDisp.innerHTML == 'error'||currDisp.innerHTML == '0'){return}
-                            currVal = currVal.slice(0, -1)
-                            currDisp.innerHTML = currVal
-                            if(currDisp.innerHTML == ''){currDisp.innerHTML = '0'}
+                case 'DEL': del()
                     break
                 case 'equal': eval()
-            } 
-            
-    } else {
-        if(currVal.length < 10){
-            if(id == '0' && currVal == '0'){
-                return
-            } else if( id == '.' && currVal.includes('.')){
-                return
-            } else {
-                currVal += id
-                currDisp.innerHTML = currVal
-                
-                }        
-            }
+                    break
+                default: numToDisp(id)           
         }
     })
 })
 
+//pushes number to display
+const numToDisp = key =>{
+//only if the current lenght is less than 10
+    if(currVal.length < 10){
+        if(key == '0' && currVal == '0' || key == '.' && currVal.includes('.')){return} 
+        else {
+            currVal += key;
+            currDisp.innerHTML = currVal;
+        }
+    }
+}
+
+//clears displays and values
 const ac = () =>{
     currVal = ''
     prevVal = ''
@@ -63,88 +65,92 @@ const ac = () =>{
     operator = ''
 }
 
-const shifter = (oper) =>{
-    if(oper == '/'){oper = '÷'}
-    if(oper == '*'){oper = '×'}
-    const lastDigit = currVal.slice(-1)
-    if(lastDigit == '.'){
-        return
-    }
-    
-    if(currVal != '' && prevVal != '' && operator != ''){
-        eval()
-    } 
-    if(currVal == '' && prevVal == ''){
-        return
-    }
-    
-    if(prevDisp.innerHTML == '' && currDisp.innerHTML != ''){
-        prevVal = currVal
-    }
-        operator = oper
-        prevDisp.innerHTML = `${prevVal}${oper}`
-        currDisp.innerHTML = ''
-        currVal = ''
+//deletes last character in string
+const del = () =>{
+    if(currDisp.innerHTML == 'error'||currDisp.innerHTML == '0'){return}
+    currVal = currVal.slice(0, -1)
+    currDisp.innerHTML = currVal;
+    if(currVal == ''){currDisp.innerHTML = '0'}
 }
 
+//shifts current value to previous value, and pushes it to prev disp, along with selected operator
+const shifter = (oper) =>{
+//if last digit is equal to '.', pressing an operator button will do nothing.
+    if(currVal.slice(-1) == '.'){return}
+
+//checks if all condtions for evaluation are satisfied
+    if(currVal != '' && prevVal != '' && operator != ''){eval()}
+    
+//only pushes the current value, if the previous display is empty
+    if(prevDisp.innerHTML == '' && currDisp.innerHTML != ''){prevVal = currVal}
+   
+//sets operator variable to selected operator, updates previous display, and clears the current val + disp
+        operator = oper;
+        prevDisp.innerHTML = `${prevVal}${oper}`
+        currDisp.innerHTML = ''
+        currVal = ''     
+}
+
+//evaluation function
 const eval = () =>{
+//only evaluates if all conditions are met
     if(currVal == '' || prevVal == '' || operator == ''){
         return
-    } 
+    }
+//convert both values from strings to floats, ready for calculation
         currVal = parseFloat(currVal)
         prevVal = parseFloat(prevVal)
         switch(operator){
-                case '+': result = prevVal + currVal
+                case '+': result = prevVal + currVal;
                 evalRender()
                     break
-                case '-': result = prevVal - currVal
+                case '-': result = prevVal - currVal;
                 evalRender()
                     break
-                case '×': result = prevVal * currVal
+                case '×': result = prevVal * currVal;
                 evalRender()
                     break
-                case '÷': result = prevVal / currVal
+                case '÷': result = prevVal / currVal;
                 evalRender()
                     break
     }
 }
 
+//pushes calculated result to current display
 const evalRender = () =>{
-    
+//converts to string to allow, and sets it to the currVal, allowing user to modify result
     currVal = result.toString()
+//if the length of the result is greater than 10, displays an error message (stops overflow)
     if(currVal.length > 10){
         currDisp.innerHTML = "error"
-        return
+            return
     }
+//shortens currVal to 10 (stops oerflow issues)
         currVal = currVal.substring(0, 10)
+//clears prev  val + disp and displays result on curr disp
         currDisp.innerHTML = currVal
         prevDisp.innerHTML = ''
         prevVal = ''
-        if(currVal.length > 10){
-            currDisp.innerHTML = "error"
-        }
-    return
 }
 
+//listens for key presses
 document.addEventListener('keydown', function(event) {
-    if(currVal.length < 10){
-        let key = event.key;
-        if(key == '0' && currVal == '0'){return}
-        if( key == '.' && currVal.includes('.') == false){
-            currVal += key
-                currDisp.innerHTML = currVal
-                    return
-        }
-        if (key == 'Enter'){eval()}
-        if (key == 'Backspace'){
-            currVal = currVal.slice(0, -1)
-                currDisp.innerHTML = currVal
-        } if (key == '+' || key == '-' || key == '*' || key == '/'){shifter(key)}
+//sets the key variable to key pressed
+    let key = event.key;
+    if (key == 'Enter'){eval()}
+    if (key == 'Backspace'){del()}
+    if (key == '+' || key == '-' || key == '*' || key == '/'){
+        if(key == '/'){key = '÷'}
+        if(key == '*'){key = '×'}
+        shifter(key)
+    }
+    if (key == '.'){numToDisp(key)}
+//ensures letters wont be pushed to disp by converting key to integer then to string, and check if  the result is "NaN"
     key =  parseInt(key)
-            key = key.toString()
-                if(key != 'NaN'){
-                    currVal += key
-                    currDisp.innerHTML = currVal
-                }
-        }
+    key = key.toString()
+    if(key != 'NaN'){
+        numToDisp(key)
+    }
 });
+
+//################################################################################################
