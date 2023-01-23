@@ -31,15 +31,17 @@ btns.forEach(el =>{
                     break
                 case 'AC': ac()
                     break
-                case 'DEL': currVal = currVal.slice(0, -1)
+                case 'DEL': if(currDisp.innerHTML == 'error'||currDisp.innerHTML == '0'){return}
+                            currVal = currVal.slice(0, -1)
                             currDisp.innerHTML = currVal
+                            if(currDisp.innerHTML == ''){currDisp.innerHTML = '0'}
                     break
                 case 'equal': eval()
             } 
             
     } else {
         if(currVal.length < 10){
-            if(id == '0' && currVal == ''){
+            if(id == '0' && currVal == '0'){
                 return
             } else if( id == '.' && currVal.includes('.')){
                 return
@@ -56,7 +58,7 @@ btns.forEach(el =>{
 const ac = () =>{
     currVal = ''
     prevVal = ''
-    currDisp.innerHTML = ''
+    currDisp.innerHTML = '0'
     prevDisp.innerHTML = ''
     operator = ''
 }
@@ -108,11 +110,19 @@ const eval = () =>{
 }
 
 const evalRender = () =>{
+    
     currVal = result.toString()
-    currVal = currVal.substring(0, 10)
-    currDisp.innerHTML = currVal
-    prevDisp.innerHTML = ''
-    prevVal = ''
+    if(currVal.length > 10){
+        currDisp.innerHTML = "error"
+        return
+    }
+        currVal = currVal.substring(0, 10)
+        currDisp.innerHTML = currVal
+        prevDisp.innerHTML = ''
+        prevVal = ''
+        if(currVal.length > 10){
+            currDisp.innerHTML = "error"
+        }
     return
 }
 
